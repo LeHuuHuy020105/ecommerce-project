@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:8.0
+    image: mysql:8.4.6
     container_name: mysql
     cap_add:
       - SYS_NICE
@@ -8,23 +8,24 @@ services:
     environment:
       - MYSQL_DATABASE=testdb
       - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=Admin@123456
     ports:
-      - '3306:3306'
+      - '3307:3306'
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+      - ./mysql_data:/var/lib/mysql
     networks:
       - default
 
-  backend-service:
-    container_name: backend-service
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    networks:
-      - default
+#  backend-service:
+#    container_name: backend-service
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - default
 
 networks:
   default:
